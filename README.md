@@ -13,13 +13,13 @@ The code can be split into three sequential stages that must be performed before
 Some of these steps require more than one environment. The environments are listed below:
 
 - Docker environment: Handles object breaking (requires pymesh).
-- Anaconda environment: Hanldes database creation and querying (requires faiss).
+- Anaconda environment: Handles database creation and querying (requires faiss).
 - Pip-torch environment: Handles pointnet++ feature extraction (requires torch).
 - Pip-tensorflow environment: Handles pretty much everything else.
 
 Instructions to setup and use each of the environments can be found below. Tested on Ubuntu 18.04 with python3.6.
 
-Note: the environment activation scripts reference the environment variable `"$DATADIR"`, and will expect it to be defined in a gitignored file `constants.sh`. The path to pointnet++ and mesh-fusion dependancies should also be defined here. Here's an example of what it should look like:
+Note: the environment activation scripts reference the environment variable `"$DATADIR"`, and will expect it to be defined in a gitignored file `constants.sh`. The path to pointnet++ and mesh-fusion dependencies should also be defined here. Here's an example of what it should look like:
 
 ```
 export DATADIR="/media/DATACENTER"                      # Where the data lives
@@ -32,7 +32,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`/libs/mesh-fusion    # Where the meshfusion i
 Once you have docker installed, just run the docker activation script.
 
 ```
-# Lauch the environment with an interactive terminal
+# Launch the environment with an interactive terminal
 ./activate_docker.bash
 
 # cd back to the working directory (you should be back in the repo)
@@ -97,7 +97,7 @@ All scripts are stored in the python directory.
 
 ### Preprocessing
 
-The main.py script handles normalization, breaking, and feature extraction. It must be passed the database location, the splits file that you'll be using, and the operations that you'd like to perform e.g.:
+The `main.py` script handles normalization, breaking, and feature extraction. It must be passed the database location, the splits file that you'll be using, and the operations that you'd like to perform e.g.:
 
 ```
 python main.py ShapeNetCore.v2 ShapeNetCore.v2/splits.json WATERPROOF
@@ -121,35 +121,41 @@ Note: The WATERPROOF and RENDER operations require that the pc have a screen att
 
 Run it with the help flag (`main.py --help`) for additional information on arguments.
 
-### Databse Creation and Querying
+### Database Creation and Querying
 
 Step one is to build the database:
 
 ```
-create_database.py <path-to-ShapeNetCore.v2> <path-to-splits-file> <where-to-save-database> <list-of-features>
+create_database.py ShapeNetCore.v2 ShapeNetCore.v2/splits.json .index global_VGG global_POINTNET
 ```
 
-With the database created, you should be able to access attributes like this:
+With the database built, you should be able to query it in one line:
+
 ```python
 from inshapenet.database import ObjectDatabase
-odb = ObjectDatabase(load_from="/path/to/save/location")
+odb = ObjectDatabase(load_from=".index")
 
-# Get a ShapenetObject corresponding to the first query object
+# Get the first object in the query set
 idx = 0
 obj = odb.get_object_query(idx)
 
-# Load the first complete object, upsampled
-complete_pts = np.load(obj.path_model_c_upsampled())['features']
+# Query the database with that object
+result = odb.hierarchical_query([obj])
 
-# Load the first broken object, upsampled
-complete_pts = np.load(obj.path_model_b_upsampled())['features']
+# Get the retrieved objects
+for idx, (obj_idx, dist) in enumerate(res[0])
+    print("top-{} Retrieved object: {} with distance: {}".format(idx, obj_idx, dist))
+```
 
-# Load the features corresponding to the first query object
-feats = odb.get_feature_query_c(idx)
+To evaluate or render the results from a database, use the evaluation script:
 
-# Query those feats into the database
-result = odb.hierarchical_query(feats)
-print('Score summary:')
-for r in result:
-    print(r[0], r[1]['score'])
+```
+python evaluate_database.py \
+    --load .index \
+    --batch_size 6000 \
+    --threads 6 \
+    --topk 20 \
+    --use_gpu \
+    --annotations \
+    --render results.png
 ```
