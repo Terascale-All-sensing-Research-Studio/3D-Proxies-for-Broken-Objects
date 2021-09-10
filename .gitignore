@@ -1,0 +1,15 @@
+# Virtual environment
+/env*
+
+# Library folders
+/libs
+
+# Py files
+*.pyc
+*__pycache__
+
+# Cache files
+*__cahce*
+
+# Constants
+constants.sh
