@@ -353,47 +353,6 @@ if __name__ == "__main__":
     
     allow_list_file = args.allowlist
 
-    # logging.info("Building allowlist {}".format(allow_list_file))
-    # # Create allowlist for the first time
-    # database_allow_list  = []
-    # for o in odb.database_objects:
-    #     o_full_id = o.get_id_str
-    #     database_allow_list.append(o_full_id)
-    # query_allow_list = []
-    # for o in odb.query_objects:
-    #     o_full_id = o.get_id_str
-    #     query_allow_list.append(o_full_id)
-    # json.dump(
-    #     {
-    #         "database": database_allow_list,
-    #         "query": query_allow_list,
-    #     },
-    #     open(allow_list_file, "w"),
-    # )
-
-    # # Add to the allowlist
-    # allow_dict = json.load(open(allow_list_file, "r"))
-    # logging.info("Adding to allowlist {}".format(allow_list_file))
-    # database_allow_list  = []
-    # for o in odb.database_objects:
-    #     o_full_id = o.get_id_str
-    #     if o_full_id in allow_dict["database"]:
-    #         database_allow_list.append(o_full_id)
-    # query_allow_list = []
-    # for o in odb.query_objects:
-    #     o_full_id = o.get_id_str
-    #     if o_full_id in allow_dict["query"]:
-    #         query_allow_list.append(o_full_id)
-    # print("database allowlist len {}".format(len(database_allow_list)))
-    # print("query allowlist len {}".format(len(query_allow_list)))
-    # json.dump(
-    #     {
-    #         "database": database_allow_list,
-    #         "query": query_allow_list,
-    #     },
-    #     open(allow_list_file, "w"),
-    # )
-
     if allow_list_file is not None:
         logging.info("Loading from allowlist {}".format(allow_list_file))
         # Apply allowlist during evaluation
@@ -449,7 +408,6 @@ if __name__ == "__main__":
     try:
         results_list = np.load(fname, allow_pickle=True)["results_list"]
     except:
-        raise RuntimeError("Resultslist not found")
         # Batch and run the query
         results_list = []
         for idx, i in enumerate(range(0, len(odb.query_objects), args.batch_size)):
