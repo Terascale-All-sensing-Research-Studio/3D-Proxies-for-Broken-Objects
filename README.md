@@ -10,14 +10,14 @@ The code can be split into three sequential stages that must be performed before
 2) Feature Extraction,
 3) Database Creation.
 
-Unfortunately some of these steps require more than one environment. The environments are listed below:
+Some of these steps require more than one environment. The environments are listed below:
 
 - Docker environment: Handles object breaking (requires pymesh).
 - Anaconda environment: Hanldes database creation and querying (requires faiss).
 - Pip-torch environment: Handles pointnet++ feature extraction (requires torch).
 - Pip-tensorflow environment: Handles pretty much everything else.
 
-Instructions to setup and use each of the environments can be found below. Tested on Ubuntu 18.04 with python3.6
+Instructions to setup and use each of the environments can be found below. Tested on Ubuntu 18.04 with python3.6.
 
 Note: the environment activation scripts reference the environment variable `"$DATADIR"`, and will expect it to be defined in a gitignored file `constants.sh`. The path to pointnet++ and mesh-fusion dependancies should also be defined here. Here's an example of what it should look like:
 
@@ -116,6 +116,8 @@ The operations that may be passed are:
 - ORB: Get ORB features. 
 - global_VGG: Get VGG16 features.
 - global_POINTNET: Get PointNet++ features. (Requires the pip-torch environment.)
+
+Note: The WATERPROOF and RENDER operations require that the pc have a screen attached. 
 
 Run it with the help flag (`main.py --help`) for additional information on arguments.
 

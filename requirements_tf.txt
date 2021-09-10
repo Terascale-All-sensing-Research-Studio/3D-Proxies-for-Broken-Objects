@@ -29,7 +29,6 @@ opencv-python==4.5.2.52
 opt-einsum==3.3.0
 pathspec==0.8.1
 Pillow==8.2.0
-pkg-resources==0.0.0
 protobuf==3.17.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
