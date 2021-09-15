@@ -91,11 +91,11 @@ if __name__ == "__main__":
 
     # Set weights
     if len(odb._feature_types) == 2 and "global_POINTNET" in odb.features:
-        alpha = 0.5
+        alpha = 0.63
         odb._feature_weights = [(alpha), (1 - alpha)]
         raise RuntimeError()
     elif len(odb._feature_types) == 2 and "global_FCGF" in odb.features:
-        alpha = 0.5
+        alpha = 0.95
         odb._feature_weights = [(alpha), (1 - alpha)]
         raise RuntimeError()
     elif len(odb._feature_types) == 1:
