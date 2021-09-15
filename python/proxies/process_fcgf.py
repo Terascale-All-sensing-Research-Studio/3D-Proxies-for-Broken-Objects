@@ -1,9 +1,5 @@
 import argparse, os
-import importlib
-
 import sys
-
-sys.path.append("../../FCGF")
 
 import torch
 import trimesh
@@ -11,11 +7,13 @@ import numpy as np
 
 import proxies.errors as errors
 
+sys.path.append(os.environ["FCGFPATH"])
+
 from model.resunet import ResUNetBN2C
 from util.misc import extract_features
 
-CLASSIFIER = None
 
+CLASSIFIER = None
 
 def get_network():
     global CLASSIFIER
@@ -23,10 +21,9 @@ def get_network():
     if CLASSIFIER is not None:
         return CLASSIFIER
 
-    # Hardcoded path to where model is stored
     root_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        "../../FCGF/ResUNetBN2C-16feat-3conv.pth",
+        os.environ["FCGFPATH"],
+        "ResUNetBN2C-16feat-3conv.pth",
     )
 
     checkpoint = torch.load(root_dir)
@@ -62,14 +59,30 @@ def process(f_in, f_out):
             skip_check=True,
         )
 
-    new_root = "/home/lambne/dev/data2/tsp/cultural_heritage_overflow"
-    try:
-        feature = feature.cpu().numpy()
-        np.savez(f_out, features=feature)
-    except PermissionError:
-        new_save = new_root + f_out.split("cultural_heritage")[-1]
-        print(new_save)
+    feature = feature.cpu().numpy()
+    np.savez(f_out, features=feature)
 
-        if not os.path.isdir(os.path.dirname(new_save)):
-            os.makedirs(os.path.dirname(new_save))
-        np.savez(new_save, features=feature)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="")
+    parser.add_argument(
+        "--input",
+        "-i",
+        type=str,
+        required=True,
+        help="The obj file to process.",
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        required=True,
+        help="The feature file to generate (txt).",
+    )
+    args = parser.parse_args()
+
+    # Process
+    process(
+        f_in=args.input,
+        f_out=args.output,
+    )

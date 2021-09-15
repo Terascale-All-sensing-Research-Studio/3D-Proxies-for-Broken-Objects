@@ -11,7 +11,7 @@ import proxies.errors as errors
 CLASSIFIER = None
 POINTNET_PATH = os.environ["POINTNETPATH"]
 
-def get_pointnet(normals):
+def get_network(normals):
     global CLASSIFIER
 
     if CLASSIFIER is not None:
@@ -47,7 +47,7 @@ def process(f_in, f_out, sigma=0.0, use_normals=True):
         model.vertices += sigma * np.random.randn(model.vertices.shape[0], 3)
     vertices, normals = model.vertices, model.vertex_normals
 
-    pointnet = get_pointnet(use_normals)
+    pointnet = get_network(use_normals)
     with torch.no_grad():
         if use_normals:
             points = (
