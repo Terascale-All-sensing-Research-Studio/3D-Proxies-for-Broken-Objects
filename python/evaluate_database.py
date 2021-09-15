@@ -412,7 +412,6 @@ if __name__ == "__main__":
         raise RuntimeError()
 
     # This handles caching of results list
-    # NOTE: IF THE INTERNAL METHODS CHANGE THIS WILL BE WRONG
     fname = os.path.join(args.cache_dir, "__temp__resultslist.npz")
     try:
         results_list = np.load(fname, allow_pickle=True)["results_list"]
@@ -470,7 +469,6 @@ if __name__ == "__main__":
             stop=stop,
             resolution=(480, 480),
         ).save(args.render)
-        exit()
 
     # Compute chamfer
     if args.chamfer is not None:
