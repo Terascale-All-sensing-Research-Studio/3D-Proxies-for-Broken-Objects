@@ -41,11 +41,12 @@ cd /opt/ws/python
 
 ### Anaconda environment
 
-Make sure you have anaconda or miniconda installed and then run the following:
+Make sure you have anaconda or [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed and then run the following:
 
 ```
-# Create the environment
+# Create and activate the environment
 conda create --name 3dp --file requirements_conda.txt
+conda activate 3dp
 
 # Now install faiss
 conda install -c pytorch faiss-gpu
@@ -64,7 +65,7 @@ source activate_torch.sh
 pip install -r requirements_torch.txt
 ```
 
-Running pointnet++ also requires the pointnet implementation provided by [Xu Yan](https://github.com/yanx27/Pointnet_Pointnet2_pytorch). Clone that repository and then add the path to the `constants.sh` file (see above). 
+Running pointnet++ also requires the [pointnet implementation provided by Xu Yan](https://github.com/yanx27/Pointnet_Pointnet2_pytorch). Clone that repository and then add the path to the `constants.sh` file (see above). 
 
 ```
 # Clone the repo 
@@ -103,7 +104,7 @@ The `main.py` script handles normalization, breaking, and feature extraction. It
 python main.py ShapeNetCore.v2 ShapeNetCore.v2/splits.json WATERPROOF
 ```
 
-The operations that may be passed are:
+The operations that may be passed below. They can all be run in the pip-tensorflow environment unless otherwise specified:
 - WATERPROOF: Run waterproofing with textures.
 - CLEAN: Run laplacian smoothing. 
 - BREAK: Break mesh. (Requires the docker environment.)
@@ -122,6 +123,8 @@ Note: The WATERPROOF and RENDER operations require that the pc have a screen att
 Run it with the help flag (`main.py --help`) for additional information on arguments.
 
 ### Database Creation and Querying
+
+All database scripts should be run in the Anaconda environment.
 
 Step one is to build the database:
 
@@ -147,7 +150,7 @@ for idx, (obj_idx, dist) in enumerate(res[0])
     print("top-{} Retrieved object: {} with distance: {}".format(idx, obj_idx, dist))
 ```
 
-To evaluate or render the results from a database, use the evaluation script:
+To evaluate or render the results from a pre-built database, use the evaluation script:
 
 ```
 python evaluate_database.py \
@@ -159,3 +162,5 @@ python evaluate_database.py \
     --annotations \
     --render results.png
 ```
+
+Note: All scripts make use of result caching whenever possible to speed up evaluation. Most scripts can be passed a --cache_dir argument where the compressed results will be dumped. When running with large databases this cache will get quite large so make sure you have extra space on your computer.
