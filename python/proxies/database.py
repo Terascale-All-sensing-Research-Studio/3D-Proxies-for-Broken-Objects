@@ -59,7 +59,11 @@ class ObjectDatabase:
             if add_query:
                 self._database_object_id_list = [
                     shapenet.ShapenetObject(
-                        root_dir, o[0], o[1], num_renders=num_renders, **self._obj_kwargs,
+                        root_dir,
+                        o[0],
+                        o[1],
+                        num_renders=num_renders,
+                        **self._obj_kwargs,
                     )
                     for o in object_id_dict["id_train_list"]
                     + object_id_dict["id_test_list"]
@@ -67,7 +71,11 @@ class ObjectDatabase:
             else:
                 self._database_object_id_list = [
                     shapenet.ShapenetObject(
-                        root_dir, o[0], o[1], num_renders=num_renders, **self._obj_kwargs,
+                        root_dir,
+                        o[0],
+                        o[1],
+                        num_renders=num_renders,
+                        **self._obj_kwargs,
                     )
                     for o in object_id_dict["id_train_list"]
                 ]
@@ -90,7 +98,11 @@ class ObjectDatabase:
             else:
                 self._query_object_id_list = [
                     shapenet.ShapenetObject(
-                        root_dir, o[0], o[1], num_renders=num_renders, **obj_kwargs,
+                        root_dir,
+                        o[0],
+                        o[1],
+                        num_renders=num_renders,
+                        **obj_kwargs,
                     )
                     for o in object_id_dict["id_test_list"]
                 ]
@@ -162,7 +174,7 @@ class ObjectDatabase:
         logging.info("Loading database from: {}".format(fname))
         with open(os.path.join(fname, "database.pkl"), "rb") as f:
             save_data = pickle.load(f)
-        
+
         # For backwards compatability
         if len(save_data) == 11:
             (
@@ -693,7 +705,7 @@ class ObjectDatabase:
                             )
                     else:
                         raise NotImplementedError
-    
+
             logging.info("Oranization took: {}".format(time.time() - start_time))
 
         # Convert the dictionaries to numpy arrays
@@ -784,10 +796,8 @@ class ObjectDatabase:
             v if feature_utils.is_global_type(t) else None
             for v, t in zip(feature_vecs, self._feature_types)
         ]
- 
-        logging.debug(
-            "Performing global query for {} objects".format(len(indexer[0]))
-        )
+
+        logging.debug("Performing global query for {} objects".format(len(indexer[0])))
         start_time = time.time()
         results_global = self.query_fast(
             feature_vecs=global_features,

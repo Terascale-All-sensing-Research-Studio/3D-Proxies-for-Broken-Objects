@@ -23,7 +23,14 @@ import proxies.analysis as analysis
 
 
 def image_results(
-    odb, results, reorder, include_annotations, class_filter=None, stop=50, top_k=3, resolution=tuple((480, 480))
+    odb,
+    results,
+    reorder,
+    include_annotations,
+    class_filter=None,
+    stop=50,
+    top_k=3,
+    resolution=tuple((480, 480)),
 ):
     class_filter = [shapenet.string2class(c) for c in class_filter]
 
@@ -39,10 +46,10 @@ def image_results(
         # Filter by class (optionally)
         if (class_filter is not None) and (obj.class_id not in class_filter):
             continue
-        
+
         # Early stop
         overall_idx += 1
-        if (stop is not None) and (overall_idx > stop): 
+        if (stop is not None) and (overall_idx > stop):
             break
 
         if overall_idx != 97:
@@ -136,7 +143,7 @@ def image_results(
 
 
 def image_class(odb, class_id, stop=50):
-    """ save one big list of all objects in that class """
+    """save one big list of all objects in that class"""
 
     stacker = []
     counter = 0
@@ -163,7 +170,7 @@ def image_class(odb, class_id, stop=50):
             break
 
     class_name = shapenet.class2string(class_id)
-    Image.fromarray(np.vstack(stacker)).save("{}.png".format(class_name))    
+    Image.fromarray(np.vstack(stacker)).save("{}.png".format(class_name))
 
 
 def eval_wrapper(fn, *args):
@@ -331,10 +338,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     logger.configure_logging(args)
 
-    assert os.path.isdir(args.cache_dir), "Cachedir not found: {}".format(args.cache_dir)
+    assert os.path.isdir(args.cache_dir), "Cachedir not found: {}".format(
+        args.cache_dir
+    )
     assert args.batch_size > 0
     assert args.topk > 0
-    #assert args.allowlist is not None
+    # assert args.allowlist is not None
 
     # Add log file output
     if args.logfile is not None:
@@ -350,7 +359,7 @@ if __name__ == "__main__":
     print("{} total objects".format(len(odb.database_objects) + len(odb.query_objects)))
     print("{} database objects".format(len(odb.database_objects)))
     print("{} query objects".format(len(odb.query_objects)))
-    
+
     allow_list_file = args.allowlist
 
     if allow_list_file is not None:
@@ -433,7 +442,7 @@ if __name__ == "__main__":
 
         stop = 1000
 
-        # Scramble the order, and only render k of the objects 
+        # Scramble the order, and only render k of the objects
         reorder = random.choices(
             range(len(results_list)),
             k=len(results_list),
@@ -443,9 +452,9 @@ if __name__ == "__main__":
         # Build and save the summary render
         logging.info("Building summary render")
         image_results(
-            odb, 
-            results_list, 
-            reorder, 
+            odb,
+            results_list,
+            reorder,
             args.annotations,
             class_filter=[
                 "jar",
@@ -555,8 +564,14 @@ if __name__ == "__main__":
                 all_class_ids.add(o.true_class)
         all_class_ids = list(all_class_ids)
 
-        results_list = [r for r, o in zip(results_list, odb.query_objects) if o.true_class != "00000000"]
-        known_query_objects = [o for o in odb.query_objects if o.true_class != "00000000"]
+        results_list = [
+            r
+            for r, o in zip(results_list, odb.query_objects)
+            if o.true_class != "00000000"
+        ]
+        known_query_objects = [
+            o for o in odb.query_objects if o.true_class != "00000000"
+        ]
 
         args.topk = 3
 
@@ -579,20 +594,22 @@ if __name__ == "__main__":
                         retreival_matrix[o, k + 1] = -1
 
         # precision and recall are of shape (k, n_classes)
-        precision, recall = analysis.get_retreival_precision_recall(retreival_matrix, len(all_class_ids))
+        precision, recall = analysis.get_retreival_precision_recall(
+            retreival_matrix, len(all_class_ids)
+        )
         precision = precision.T
         recall = recall.T
-        
+
         with open(args.map, "w") as csv_file:
-            csv_file.write("Mean Precision: {}\n".format(precision[:,0].mean()))
+            csv_file.write("Mean Precision: {}\n".format(precision[:, 0].mean()))
             csv_file.write("Class, Precision, Recall\n")
             for c, p, r in zip(all_class_ids, precision, recall):
                 csv_file.write(
                     "{}, {}, {}\n".format(shapenet.class2string(c), p[0], r[0])
                 )
-        
-        with open(args.map+"_means.csv", "w") as csv_file:
-            #csv_file.write("Mean Precision: {}\n".format(precision[:,0].mean()))
+
+        with open(args.map + "_means.csv", "w") as csv_file:
+            # csv_file.write("Mean Precision: {}\n".format(precision[:,0].mean()))
             csv_file.write("Precision, ")
             for p in precision.mean(axis=0):
                 csv_file.write("{}, ".format(p))
@@ -613,7 +630,9 @@ if __name__ == "__main__":
                 all_class_ids.add(o.true_class)
         all_class_ids = list(all_class_ids)
 
-        known_query_objects = [o for o in odb.query_objects if o.true_class != "00000000"]
+        known_query_objects = [
+            o for o in odb.query_objects if o.true_class != "00000000"
+        ]
 
         # Build the integer-based retrieval matrix
         retreival_matrix = np.ones((len(known_query_objects), args.topk + 1)) * np.nan
@@ -633,7 +652,9 @@ if __name__ == "__main__":
                     except ValueError:
                         retreival_matrix[o, k + 1] = -1
 
-        precision, recall = analysis.get_retreival_precision_recall(retreival_matrix, len(all_class_ids))
+        precision, recall = analysis.get_retreival_precision_recall(
+            retreival_matrix, len(all_class_ids)
+        )
 
         precision = np.vstack(
             (
@@ -664,10 +685,14 @@ if __name__ == "__main__":
                 pruned_precision.append(p)
                 pruned_recall.append(r)
                 pruned_class_list.append(c)
-                
+
         # Take the mean over all classes
         plt.plot(np.array(pruned_recall).T, np.array(pruned_precision).T)
-        plt.legend([shapenet.class2string(c) for c in pruned_class_list], bbox_to_anchor=(1.2, 0.5), loc="center")
+        plt.legend(
+            [shapenet.class2string(c) for c in pruned_class_list],
+            bbox_to_anchor=(1.2, 0.5),
+            loc="center",
+        )
         plt.tight_layout()
         plt.savefig(args.pr_curve)
         plt.savefig("test.png")

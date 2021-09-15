@@ -15,6 +15,7 @@ from util.misc import extract_features
 
 CLASSIFIER = None
 
+
 def get_network():
     global CLASSIFIER
 

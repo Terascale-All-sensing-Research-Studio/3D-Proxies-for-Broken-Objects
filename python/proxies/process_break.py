@@ -35,7 +35,13 @@ def intersect_mesh(a, b, sig=5):
 
 
 def break_mesh(
-    mesh, tool=None, offset=0.0, rand_translation=0.1, noise=0.005, replicator=None, return_tool=False,
+    mesh,
+    tool=None,
+    offset=0.0,
+    rand_translation=0.1,
+    noise=0.005,
+    replicator=None,
+    return_tool=False,
 ):
     """
     Create a break and return the break and the restoration part. Pass in

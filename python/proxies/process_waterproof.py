@@ -22,10 +22,11 @@ except (ImportError, OSError):
 import proxies.errors as errors
 import proxies.logger as logger
 
-'''
+"""
 Credit for waterproofing goes to David Stuz:
 https://github.com/davidstutz/mesh-fusion
-'''
+"""
+
 
 def subdivide_to_size(vertices, faces, max_edge, max_iter=10, return_index=False):
     """

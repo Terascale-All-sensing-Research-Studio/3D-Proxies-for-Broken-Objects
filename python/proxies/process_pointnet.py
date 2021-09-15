@@ -11,6 +11,7 @@ import proxies.errors as errors
 CLASSIFIER = None
 POINTNET_PATH = os.environ["POINTNETPATH"]
 
+
 def get_network(normals):
     global CLASSIFIER
 
@@ -24,7 +25,9 @@ def get_network(normals):
     if normals:
         model_dir = os.path.join(root_dir, "log/classification/pointnet2_msg_normals")
     else:
-        model_dir = os.path.join(root_dir, "log/classification/pointnet2_ssg_wo_normals")
+        model_dir = os.path.join(
+            root_dir, "log/classification/pointnet2_ssg_wo_normals"
+        )
 
     # Get the loader
     model = importlib.import_module(os.listdir(model_dir + "/logs")[0].split(".")[0])

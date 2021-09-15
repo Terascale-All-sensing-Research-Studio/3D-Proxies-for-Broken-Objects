@@ -23,7 +23,17 @@ SCANNED_CLASSES = None
 
 
 class ShapenetObject:
-    def __init__(self, root, class_id, object_id, true_class=None, num_renders=1, resolution=(640, 640), noise=0.0, normals=True):
+    def __init__(
+        self,
+        root,
+        class_id,
+        object_id,
+        true_class=None,
+        num_renders=1,
+        resolution=(640, 640),
+        noise=0.0,
+        normals=True,
+    ):
         self.root = root
         self._class_id = class_id
         self._object_id = object_id
@@ -664,7 +674,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "renders",
-                "model_c_{}_{}_{}.png".format(angle, self._resolution[0], self._resolution[1]),
+                "model_c_{}_{}_{}.png".format(
+                    angle, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -674,7 +686,6 @@ class ShapenetObject:
                 "renders",
                 "model_c_{}.png".format(angle),
             )
-
 
     def path_render_depth_c(self, angle):
         return os.path.join(
@@ -710,7 +721,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "renders",
-                "model_b_{}_{}_{}_{}.png".format(idx, angle, self._resolution[0], self._resolution[1]),
+                "model_b_{}_{}_{}_{}.png".format(
+                    idx, angle, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -720,7 +733,6 @@ class ShapenetObject:
                 "renders",
                 "model_b_{}_{}.png".format(idx, angle),
             )
-
 
     def path_render_depth_b(self, angle, idx=0):
         return os.path.join(
@@ -756,7 +768,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "renders",
-                "model_r_{}_{}_{}_{}.png".format(idx, angle, self._resolution[0], self._resolution[1]),
+                "model_r_{}_{}_{}_{}.png".format(
+                    idx, angle, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -766,7 +780,6 @@ class ShapenetObject:
                 "renders",
                 "model_r_{}_{}.png".format(idx, angle),
             )
-
 
     def path_render_depth_r(self, angle, idx=0):
         return os.path.join(
@@ -839,7 +852,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "features",
-                "model_c_{}_global_{}_{}_{}vgg.npz".format(angle, flag, self._resolution[0], self._resolution[1]),
+                "model_c_{}_global_{}_{}_{}vgg.npz".format(
+                    angle, flag, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -849,7 +864,6 @@ class ShapenetObject:
                 "features",
                 "model_c_{}_global_{}vgg.npz".format(angle, flag),
             )
-
 
     def path_feature_c_shot(self, flag=""):
         return os.path.join(
@@ -928,7 +942,6 @@ class ShapenetObject:
                 "features",
                 "model_c_global_{}pointnet.npz".format(flag),
             )
-
 
     def path_feature_c_fcgf(self, flag=""):
         return os.path.join(
@@ -1012,7 +1025,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "features",
-                "model_b_{}_{}_global_{}_{}_{}vgg.npz".format(idx, angle, flag, self._resolution[0], self._resolution[1]),
+                "model_b_{}_{}_global_{}_{}_{}vgg.npz".format(
+                    idx, angle, flag, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -1022,7 +1037,6 @@ class ShapenetObject:
                 "features",
                 "model_b_{}_{}_global_{}vgg.npz".format(idx, angle, flag),
             )
-
 
     def path_feature_b_shot(self, idx=0, flag=""):
         return os.path.join(
@@ -1120,14 +1134,18 @@ class ShapenetObject:
                     self._class_id,
                     self._object_id,
                     "features",
-                    "model_b_{}_global_{}_{}pointnet.npz".format(idx, flag, self._noise),
+                    "model_b_{}_global_{}_{}pointnet.npz".format(
+                        idx, flag, self._noise
+                    ),
                 )
             return os.path.join(
                 self.root,
                 self._class_id,
                 self._object_id,
                 "features",
-                "model_b_{}_global_{}_{}_nonormals_pointnet.npz".format(idx, flag, self._noise),
+                "model_b_{}_global_{}_{}_nonormals_pointnet.npz".format(
+                    idx, flag, self._noise
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -1208,7 +1226,9 @@ class ShapenetObject:
                 self._class_id,
                 self._object_id,
                 "features",
-                "model_r_{}_{}_global_{}_{}_{}vgg.npz".format(idx, angle, flag, self._resolution[0], self._resolution[1]),
+                "model_r_{}_{}_global_{}_{}_{}vgg.npz".format(
+                    idx, angle, flag, self._resolution[0], self._resolution[1]
+                ),
             )
         except AttributeError:
             return os.path.join(
@@ -1315,14 +1335,18 @@ class ShapenetObject:
                     self._class_id,
                     self._object_id,
                     "features",
-                    "model_r_{}_global_{}_{}pointnet.npz".format(idx, flag, self._noise),
+                    "model_r_{}_global_{}_{}pointnet.npz".format(
+                        idx, flag, self._noise
+                    ),
                 )
             return os.path.join(
                 self.root,
                 self._class_id,
                 self._object_id,
                 "features",
-                "model_r_{}_global_{}_{}_nonormals_pointnet.npz".format(idx, flag, self._noise),
+                "model_r_{}_global_{}_{}_nonormals_pointnet.npz".format(
+                    idx, flag, self._noise
+                ),
             )
         except AttributeError:
             return os.path.join(

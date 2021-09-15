@@ -72,25 +72,25 @@ def main(
         logging.info("Loading saved data from splits file {}".format(splits_file))
         object_id_dict = json.load(open(splits_file, "r"))
         id_train_list = [
-                shapenet.ShapenetObject(
-                    root=input_dir, 
-                    class_id=o[0], 
-                    object_id=o[1],
-                    resolution=render_resolution,
-                    noise=pointcloud_noise,
-                    normals=(not no_normals),
-                )
+            shapenet.ShapenetObject(
+                root=input_dir,
+                class_id=o[0],
+                object_id=o[1],
+                resolution=render_resolution,
+                noise=pointcloud_noise,
+                normals=(not no_normals),
+            )
             for o in object_id_dict["id_train_list"]
         ]
         id_test_list = [
-                shapenet.ShapenetObject(
-                        root=input_dir,
-                        class_id=o[0],
-                        object_id=o[1],
-                        resolution=render_resolution,
-                        noise=pointcloud_noise,
-                        normals=(not no_normals),
-                    )
+            shapenet.ShapenetObject(
+                root=input_dir,
+                class_id=o[0],
+                object_id=o[1],
+                resolution=render_resolution,
+                noise=pointcloud_noise,
+                normals=(not no_normals),
+            )
             for o in object_id_dict["id_test_list"]
         ]
         object_id_list = id_test_list + id_train_list
@@ -624,8 +624,8 @@ def main(
                     ):
                         continue
                     executor.graceful_submit(
-                        pointnet.process, 
-                        f_in=f_in, 
+                        pointnet.process,
+                        f_in=f_in,
                         f_out=f_out,
                         sigma=obj.noise,
                         use_normals=obj.normals,
@@ -656,8 +656,8 @@ def main(
                             ):
                                 continue
                             executor.graceful_submit(
-                                pointnet.process, 
-                                f_in=f_in, 
+                                pointnet.process,
+                                f_in=f_in,
                                 f_out=f_out,
                                 sigma=obj.noise,
                                 use_normals=obj.normals,
@@ -735,7 +735,11 @@ def main(
                         ):
                             continue
                         executor.graceful_submit(
-                            process_render.process, f_in=f_in, f_out=f_out, angle=angle, resolution=obj.resolution
+                            process_render.process,
+                            f_in=f_in,
+                            f_out=f_out,
+                            angle=angle,
+                            resolution=obj.resolution,
                         )
 
                     for idx in range(num_breaks):
@@ -1208,7 +1212,7 @@ if __name__ == "__main__":
         type=str,
         nargs="+",
         help="List of operations to apply. Possible operations are "
-        + "{}.\n".format(valid_ops)
+        + "{}.\n".format(valid_ops),
     )
     parser.add_argument(
         "--threads",

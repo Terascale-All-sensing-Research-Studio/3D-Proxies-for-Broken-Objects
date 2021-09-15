@@ -87,7 +87,7 @@ if __name__ == "__main__":
         obj_kwargs={
             "resolution": args.render_resolution,
             "noise": args.pointcloud_noise,
-            "normals": (not args.no_normals)
+            "normals": (not args.no_normals),
         },
         root_dir=args.root_dir,
         add_query=args.add_query,

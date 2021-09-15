@@ -16,8 +16,10 @@ if __name__ == "__main__":
         "FCGF",
     ]
 
-    parser = argparse.ArgumentParser(description="Creates the bag-of-features "
-        + "features. This doesn't support images that are not 640x640.")
+    parser = argparse.ArgumentParser(
+        description="Creates the bag-of-features "
+        + "features. This doesn't support images that are not 640x640."
+    )
     parser.add_argument(
         type=str,
         dest="input",

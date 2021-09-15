@@ -7,8 +7,10 @@ import proxies.logger as logger
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Allowlists make sure that"
-        + "you pass the same objects to all models you test.")
+    parser = argparse.ArgumentParser(
+        description="Allowlists make sure that"
+        + "you pass the same objects to all models you test."
+    )
     parser.add_argument(
         "--indices",
         type=str,
