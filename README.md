@@ -2,6 +2,16 @@
 
 Code for "Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects." Published at ACM SCF 2021. 
 
+```
+@inproceedings{lamb2021using,
+  title={Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects},
+  author={Lamb, Nikolas and Wiederhold, Noah and Lamb, Benjamin and Banerjee, Sean and Banerjee, Natasha Kholgade},
+  booktitle={Symposium on Computational Fabrication},
+  pages={1--15},
+  year={2021}
+}
+```
+
 ## Installation
 
 The code can be split into three sequential stages that must be performed before the database can be queried:
