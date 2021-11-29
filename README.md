@@ -2,17 +2,6 @@
 
 Code for "Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects." Published at ACM SCF 2021. 
 
-If you end up using code from this repo, please cite our publication:
-```
-@inproceedings{lamb2021using,
-  title={Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects},
-  author={Lamb, Nikolas and Wiederhold, Noah and Lamb, Benjamin and Banerjee, Sean and Banerjee, Natasha Kholgade},
-  booktitle={Symposium on Computational Fabrication},
-  pages={1--15},
-  year={2021}
-}
-```
-
 ## Installation
 
 The code can be split into three sequential stages that must be performed before the database can be queried:
@@ -175,3 +164,15 @@ python evaluate_database.py \
 ```
 
 Note: All scripts make use of result caching whenever possible to speed up evaluation. Most scripts can be passed a --cache_dir argument where the compressed results will be dumped. When running with large databases this cache will get quite large so make sure you have extra space on your computer.
+
+### Cite Us
+If you end up using code from this repo, please cite our publication:
+```
+@inproceedings{lamb2021using,
+  title={Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects},
+  author={Lamb, Nikolas and Wiederhold, Noah and Lamb, Benjamin and Banerjee, Sean and Banerjee, Natasha Kholgade},
+  booktitle={Symposium on Computational Fabrication},
+  pages={1--15},
+  year={2021}
+}
+```
