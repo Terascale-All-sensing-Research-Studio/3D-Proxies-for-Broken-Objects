@@ -2,6 +2,7 @@
 
 Code for "Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects." Published at ACM SCF 2021. 
 
+If you end up using code from this repo, please cite our publication:
 ```
 @inproceedings{lamb2021using,
   title={Using Learned Visual and Geometric Features to Retrieve Complete 3D Proxies for Broken Objects},
